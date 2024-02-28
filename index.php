@@ -4,12 +4,25 @@
     <meta charset="UTF-8">
     <title>Aplicación de cámara web</title>
     <style>
-        #video {
-            width: 50%;
-            height: auto;
+        .video-container {
+            width: 90%; /* Ancho del contenedor de video */
+            position: relative;
+            margin: 0 auto;
+            overflow: hidden; /* Ocultar el desbordamiento de los videos */
+        }
+        .video {
+            width: 50%; /* Ancho del video al 50% del contenedor */
+            height: 100%; /* Altura del video al 100% del contenedor */
+            float: left; /* Alinear los videos uno al lado del otro */
+            transform: scaleX(1); /* Restaurar la orientación normal para el primer video */
+        }
+        #video2 {
+            transform: scaleX(-1); /* Voltear horizontalmente el segundo video */
         }
         #canvas {
             display: none;
+            width: 100%;
+            height: auto;
         }
         #botonCapturar {
             display: block;
@@ -25,64 +38,92 @@
 </head>
 <body>
     <h1>Aplicación de cámara web</h1>
-    <video id="video" autoplay></video>
+    <div class="video-container">
+        <video class="video" id="video1" autoplay></video>
+        <video class="video" id="video2" autoplay></video>
+    </div>
+    <button id="botonPantallaCompleta">Pantalla Completa</button>
     <button id="botonCapturar">Capturar</button>
     <canvas id="canvas"></canvas>
 
+        <!-- Mostrar en consola los identificadores de las camaras usadas -->
     <script>
-        // Acceder al video stream de la cámara web
-        navigator.mediaDevices.getUserMedia({ video: true })
+        
+        navigator.mediaDevices.enumerateDevices()
+  .then(function(devices) {
+    devices.forEach(function(device) {
+      if (device.kind === 'videoinput') {
+        console.log('Dispositivo de video encontrado:', device.label, 'ID:', device.deviceId);
+      }
+    });
+  })
+  .catch(function(err) {
+    console.error('Error al enumerar dispositivos:', err);
+  });
+  </script>
+    
+    <script>
+        // Acceder al video stream de la primera cámara USB
+        navigator.mediaDevices.getUserMedia({ video: { deviceId: { exact: 'wm8IYg6l5Wi7xZHA2VdxbvjKrpeUgZUfcGyd/KqrIbk=' } } })
             .then(function(stream) {
-                var video = document.getElementById('video');
-                video.srcObject = stream;
-                video.play();
+                var video1 = document.getElementById('video1');
+                video1.srcObject = stream;
+                video1.play();
             })
             .catch(function(err) {
-                console.log("Error: " + err);
+                console.log("Error al acceder a la primera cámara: " + err);
+            });
+
+        // Acceder al video stream de la segunda cámara USB
+        navigator.mediaDevices.getUserMedia({ video: { deviceId: { exact: 'Wa6epbQOMpOyErawWcpTmRZj2wXndy4zoK/Br1U4cMk=' } } })
+            .then(function(stream) {
+                var video2 = document.getElementById('video2');
+                video2.srcObject = stream;
+                video2.play();
+            })
+            .catch(function(err) {
+                console.log("Error al acceder a la segunda cámara: " + err);
             });
 
         // Capturar una imagen de la cámara web
+        // document.getElementById('botonCapturar').addEventListener('click', function() {
+        //     var video1 = document.getElementById('video1');
+        //     var canvas = document.getElementById('canvas');
+        //     var context = canvas.getContext('2d');
+        //     canvas.width = video1.videoWidth;
+        //     canvas.height = video1.videoHeight;
+        //     context.drawImage(video1, 0, 0, canvas.width, canvas.height);
+            
+        //     // Convertir la imagen a Base64 y enviarla al servidor
+        //     var dataURL = canvas.toDataURL();
+        //     var xhr = new XMLHttpRequest();
+        //     xhr.open('POST', 'guardar_imagen.php', true);
+        //     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        //     xhr.send('imagen=' + dataURL);
+        // });
+             // Capturar una imagen de la cámara web al hacer clic en el botón
         document.getElementById('botonCapturar').addEventListener('click', function() {
-            var video = document.getElementById('video');
+            var video1 = document.getElementById('video1');
             var canvas = document.getElementById('canvas');
             var context = canvas.getContext('2d');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            
-            // Convertir la imagen a Base64 y enviarla al servidor
-            var dataURL = canvas.toDataURL();
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'guardar_imagen.php', true);
-            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            xhr.send('imagen=' + dataURL);
+            canvas.width = video1.videoWidth * 2; // Ancho del canvas igual a la suma de los anchos de los videos
+            canvas.height = video1.videoHeight;
+            context.drawImage(video1, 0, 0, video1.videoWidth, video1.videoHeight); // Dibujar el primer video
+            context.drawImage(video2, video1.videoWidth, 0, video1.videoWidth, video1.videoHeight); // Dibujar el segundo video
+            var dataURL = canvas.toDataURL('image/png'); // Convertir el contenido del canvas a una imagen PNG
+            // Descargar la imagen
+            var link = document.createElement('a');
+            link.href = dataURL;
+            link.download = 'captura_camara.png';
+            link.click();
         });
-    </script>
-
-<script>
-        // Solicitar pantalla completa al cargar la página
-        document.addEventListener('DOMContentLoaded', function() {
-            var elem = document.documentElement; // El elemento HTML
+        // Solicitar pantalla completa al hacer clic en el botón
+        document.getElementById('botonPantallaCompleta').addEventListener('click', function() {
+            var elem = document.documentElement;
             var requestFullScreen = elem.requestFullscreen || elem.mozRequestFullScreen || elem.webkitRequestFullscreen || elem.msRequestFullscreen;
 
             if (requestFullScreen) {
                 requestFullScreen.call(elem);
-            }
-
-           // Ocultar la barra de herramientas
-           document.addEventListener('mousemove', function() {
-                hideToolbar();
-            });
-
-            function hideToolbar() {
-                var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
-                                     (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
-                                     (document.mozFullScreenElement && document.mozFullScreenElement !== null) ||
-                                     (document.msFullscreenElement && document.msFullscreenElement !== null);
-
-                if (isInFullScreen) {
-                    document.querySelector('.toolbar').style.display = 'none';
-                }
             }
         });
     </script>
