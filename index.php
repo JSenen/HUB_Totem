@@ -4,74 +4,78 @@
     <meta charset="UTF-8">
     <title>Aplicación de cámara web</title>
     <style>
-        .video-container {
-            width: 90%; /* Ancho del contenedor de video */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0; /* Color de fondo */
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             position: relative;
-            margin: 0 auto;
-            overflow: hidden; /* Ocultar el desbordamiento de los videos */
+        }
+        .video-container {
+            position: relative;
+            width: 90%;
+            /*max-width: 800px;*/
+            border-radius: 10px; /* Bordes redondeados */
+            overflow: hidden; /* Ocultar cualquier desbordamiento */
+            margin-bottom: 20px; /* Espacio inferior para los botones */
+            border: 10px solid transparent; /* Borde transparente */
+            background-image: linear-gradient(315deg, #833ab4, #fd1d1d 50%, #fcb045); /* Gradiente en el borde */
+            background-origin: border-box; /* La imagen de fondo comienza en el borde */
+            
         }
         .video {
-            width: 50%; /* Ancho del video al 50% del contenedor */
-            height: 100%; /* Altura del video al 100% del contenedor */
-            float: left; /* Alinear los videos uno al lado del otro */
-            transform: scaleX(1); /* Restaurar la orientación normal para el primer video */
-
-         
-        }
-        #video2 {
-            transform: scaleX(-1); /* Voltear horizontalmente el segundo video */
-        }
-        #canvas {
-            display: none;
-            width: 100%;
+            width: 50%;
             height: auto;
+            float: left;
         }
-        #botonCapturar {
-            display: block;
-            margin: 10px auto;
+        .buttons-container {
+            text-align: center;
+        }
+        button {
             padding: 10px 20px;
             background-color: #3498db;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-        }
-        
-        .video-container {
-            border: solid 5px transparent;
-            border-radius: 10px;
-            background-image: linear-gradient(white, white),
-            linear-gradient(315deg,#833ab4,#fdidid 50%,#fcb045);
-            background-origin: border-box;
-            background-clip: content-box, border-box;
+            margin: 0 10px;
         }
     </style>
 </head>
 <body>
-    <h1>Aplicación de cámara web</h1>
-    <div class="video-container">
-        <video class="video" id="video1" autoplay></video>
-        <video class="video" id="video2" autoplay></video>
+    <div class="container">
+        <div class="video-container">
+            <video class="video" id="video1" autoplay></video>
+            <video class="video" id="video2" autoplay></video>
+        </div>
+        <div class="buttons-container">
+            <button id="botonPantallaCompleta">Pantalla Completa</button>
+            <button id="botonCapturar">Capturar</button>
+        </div>
     </div>
-    <button id="botonPantallaCompleta">Pantalla Completa</button>
-    <button id="botonCapturar">Capturar</button>
-    <canvas id="canvas" class="gradient-border" ></canvas>
 
-        <!-- Mostrar en consola los identificadores de las camaras usadas -->
+    <!-- Mostrar en consola los identificadores de las camaras usadas -->
     <script>
-        
         navigator.mediaDevices.enumerateDevices()
-  .then(function(devices) {
-    devices.forEach(function(device) {
-      if (device.kind === 'videoinput') {
-        console.log('Dispositivo de video encontrado:', device.label, 'ID:', device.deviceId);
-      }
-    });
-  })
-  .catch(function(err) {
-    console.error('Error al enumerar dispositivos:', err);
-  });
-  </script>
+            .then(function(devices) {
+                devices.forEach(function(device) {
+                    if (device.kind === 'videoinput') {
+                        console.log('Dispositivo de video encontrado:', device.label, 'ID:', device.deviceId);
+                    }
+                });
+            })
+            .catch(function(err) {
+                console.error('Error al enumerar dispositivos:', err);
+            });
+    </script>
     
     <script>
         // Acceder al video stream de la primera cámara USB
@@ -96,26 +100,10 @@
                 console.log("Error al acceder a la segunda cámara: " + err);
             });
 
-        // Capturar una imagen de la cámara web
-        // document.getElementById('botonCapturar').addEventListener('click', function() {
-        //     var video1 = document.getElementById('video1');
-        //     var canvas = document.getElementById('canvas');
-        //     var context = canvas.getContext('2d');
-        //     canvas.width = video1.videoWidth;
-        //     canvas.height = video1.videoHeight;
-        //     context.drawImage(video1, 0, 0, canvas.width, canvas.height);
-            
-        //     // Convertir la imagen a Base64 y enviarla al servidor
-        //     var dataURL = canvas.toDataURL();
-        //     var xhr = new XMLHttpRequest();
-        //     xhr.open('POST', 'guardar_imagen.php', true);
-        //     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        //     xhr.send('imagen=' + dataURL);
-        // });
-             // Capturar una imagen de la cámara web al hacer clic en el botón
+        // Capturar una imagen de la cámara web al hacer clic en el botón
         document.getElementById('botonCapturar').addEventListener('click', function() {
             var video1 = document.getElementById('video1');
-            var canvas = document.getElementById('canvas');
+            var canvas = document.createElement('canvas');
             var context = canvas.getContext('2d');
             canvas.width = video1.videoWidth * 2; // Ancho del canvas igual a la suma de los anchos de los videos
             canvas.height = video1.videoHeight;
