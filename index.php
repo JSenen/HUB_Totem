@@ -12,31 +12,23 @@
             align-items: center;
             height: 100vh;
             background-color: #f0f0f0; /* Color de fondo */
-        }
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
+            overflow: hidden; /* Evitar desplazamiento de la página */
         }
         .video-container {
-            position: relative;
-            width: 90%;
-            /*max-width: 800px;*/
-            border-radius: 10px; /* Bordes redondeados */
-            overflow: hidden; /* Ocultar cualquier desbordamiento */
-            margin-bottom: 20px; /* Espacio inferior para los botones */
-            border: 10px solid transparent; /* Borde transparente */
-            background-image: linear-gradient(315deg, #833ab4, #fd1d1d 50%, #fcb045); /* Gradiente en el borde */
-            background-origin: border-box; /* La imagen de fondo comienza en el borde */
-            
+            display: flex;
+            height: 100%;
+            width: 100%;
         }
-        .video {
+        video {
+            height: 100%;
             width: 50%;
-            height: auto;
-            float: left;
+            object-fit: cover; /* Escalar el video para cubrir */
         }
         .buttons-container {
+            position: fixed; /* Posición fija en la ventana */
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
             text-align: center;
         }
         button {
@@ -51,19 +43,17 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="video-container">
-            <video class="video" id="video1" autoplay></video>
-            <video class="video" id="video2" autoplay></video>
-        </div>
-        <div class="buttons-container">
-            <button id="botonPantallaCompleta">Pantalla Completa</button>
-            <button id="botonCapturar">Capturar</button>
-        </div>
+    <div class="video-container">
+        <video id="video1" autoplay></video>
+        <video id="video2" autoplay></video>
+    </div>
+    <div class="buttons-container">
+        <button id="botonPantallaCompleta">Pantalla Completa</button>
+        <button id="botonCapturar">Capturar</button>
     </div>
 
-    <!-- Mostrar en consola los identificadores de las camaras usadas -->
-    <script>
+   <!-- Mostrar en consola los identificadores de las cámaras usadas -->
+   <script>
         navigator.mediaDevices.enumerateDevices()
             .then(function(devices) {
                 devices.forEach(function(device) {
@@ -99,7 +89,6 @@
             .catch(function(err) {
                 console.log("Error al acceder a la segunda cámara: " + err);
             });
-
         // Capturar una imagen de la cámara web al hacer clic en el botón
         document.getElementById('botonCapturar').addEventListener('click', function() {
             var video1 = document.getElementById('video1');
