@@ -43,10 +43,10 @@
         }
         button {
             padding: 20px 40px;
-            background-color: grey;
+            background-color: #1d252d;
             color: #fff;
             border: none;
-            border-radius: 5px;
+            border-radius: 25px;
             cursor: pointer;
             margin: 0 10px;
         }
