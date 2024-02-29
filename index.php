@@ -15,6 +15,8 @@
             height: 100%; /* Altura del video al 100% del contenedor */
             float: left; /* Alinear los videos uno al lado del otro */
             transform: scaleX(1); /* Restaurar la orientación normal para el primer video */
+
+         
         }
         #video2 {
             transform: scaleX(-1); /* Voltear horizontalmente el segundo video */
@@ -34,6 +36,15 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        
+        .video-container {
+            border: solid 5px transparent;
+            border-radius: 10px;
+            background-image: linear-gradient(white, white),
+            linear-gradient(315deg,#833ab4,#fdidid 50%,#fcb045);
+            background-origin: border-box;
+            background-clip: content-box, border-box;
+        }
     </style>
 </head>
 <body>
@@ -44,7 +55,7 @@
     </div>
     <button id="botonPantallaCompleta">Pantalla Completa</button>
     <button id="botonCapturar">Capturar</button>
-    <canvas id="canvas"></canvas>
+    <canvas id="canvas" class="gradient-border" ></canvas>
 
         <!-- Mostrar en consola los identificadores de las camaras usadas -->
     <script>
