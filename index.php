@@ -13,6 +13,7 @@
             height: 100vh;
             background-color: #f0f0f0; /* Color de fondo */
             overflow: hidden; /* Evitar desplazamiento de la página */
+            position: relative; /* Para establecer posicionamiento absoluto de los botones */
         }
         .video-container {
             display: flex;
@@ -31,16 +32,67 @@
             transform: translateX(-50%);
             text-align: center;
         }
+        .button-wrapper {
+            background-color: white;
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: max-content; /* Ancho ajustado al contenido */
+        }
         button {
-            padding: 10px 20px;
-            background-color: #3498db;
+            padding: 20px 40px;
+            background-color: grey;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             margin: 0 10px;
         }
+        .text-container {
+            text-align: center;
+            margin-bottom: 20px; /* Ajusta la distancia entre los textos y los botones */
+            margin-right: 220px; /* Ajusta la distancia lateral */
+        }
+        .text-container p {
+            margin: 5px 0;
+            white-space: nowrap; /* Evitar el ajuste de línea */
+        }
+        .t1 {
+            font-size: 35px;
+            font-style: bold;
+            
+        }
+        .t2 {
+            font-size: 20px;
+
+        }
+        .rounded-buttons {
+            position: absolute;
+            top: 20px; /* Ajusta la posición vertical */
+            right: 20px; /* Ajusta la posición horizontal */
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        .rounded-buttons button {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-top: 10px; /* Espacio entre los botones */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            background-color: white;
+            color: black;
+            cursor: pointer;
+            font-size: 20px;
+            font-style: bold;
+        }
     </style>
+
 </head>
 <body>
     <div class="video-container">
@@ -48,8 +100,22 @@
         <video id="video2" autoplay></video>
     </div>
     <div class="buttons-container">
-        <button id="botonPantallaCompleta">Pantalla Completa</button>
-        <button id="botonCapturar">Capturar</button>
+        <div class="button-wrapper">
+            <div class="text-container">
+                <p class="t1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris </p>
+                <p class="t2">Integer semper blandit felis, a mollis quam commodo ac 2</p>
+            </div>
+            <div>
+                <button id="botonPantallaCompleta">Pantalla Completa</button>
+                <button id="botonCapturar">Capturar</button>
+            </div>
+        </div>
+    </div>
+       <!-- Botones redondos -->
+    <div class="rounded-buttons">
+        <button id="boton1">Normal</button>
+        <button id="boton2">UV</button>
+        <button id="boton3">Mixta</button>
     </div>
 
    <!-- Mostrar en consola los identificadores de las cámaras usadas -->
