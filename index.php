@@ -3,96 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Aplicación de cámara web</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0; /* Color de fondo */
-            overflow: hidden; /* Evitar desplazamiento de la página */
-            position: relative; /* Para establecer posicionamiento absoluto de los botones */
-        }
-        .video-container {
-            display: flex;
-            height: 100%;
-            width: 100%;
-        }
-        video {
-            height: 100%;
-            width: 50%;
-            object-fit: cover; /* Escalar el video para cubrir */
-        }
-        .buttons-container {
-            position: fixed; /* Posición fija en la ventana */
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-        }
-        .button-wrapper {
-            background-color: white;
-            padding: 10px;
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: max-content; /* Ancho ajustado al contenido */
-        }
-        button {
-            padding: 20px 40px;
-            background-color: #1d252d;
-            color: #fff;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            margin: 0 10px;
-        }
-        .text-container {
-            text-align: center;
-            margin-bottom: 20px; /* Ajusta la distancia entre los textos y los botones */
-            margin-right: 220px; /* Ajusta la distancia lateral */
-        }
-        .text-container p {
-            margin: 5px 0;
-            white-space: nowrap; /* Evitar el ajuste de línea */
-        }
-        .t1 {
-            font-size: 35px;
-            font-style: bold;
-            
-        }
-        .t2 {
-            font-size: 20px;
-
-        }
-        .rounded-buttons {
-            position: absolute;
-            top: 20px; /* Ajusta la posición vertical */
-            right: 20px; /* Ajusta la posición horizontal */
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-        }
-        .rounded-buttons button {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin-top: 10px; /* Espacio entre los botones */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: none;
-            background-color: white;
-            color: black;
-            cursor: pointer;
-            font-size: 20px;
-            font-style: bold;
-        }
-    </style>
-
+    <!-- Link CSS -->
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
     <div class="video-container">
@@ -117,7 +29,7 @@
         <button id="boton2">UV</button>
         <button id="boton3">Mixta</button>
     </div>
-
+    
    <!-- Mostrar en consola los identificadores de las cámaras usadas -->
    <script>
         navigator.mediaDevices.enumerateDevices()
@@ -131,11 +43,12 @@
             .catch(function(err) {
                 console.error('Error al enumerar dispositivos:', err);
             });
+
     </script>
     
     <script>
         // Acceder al video stream de la primera cámara USB
-        navigator.mediaDevices.getUserMedia({ video: { deviceId: { exact: 'wm8IYg6l5Wi7xZHA2VdxbvjKrpeUgZUfcGyd/KqrIbk=' } } })
+        navigator.mediaDevices.getUserMedia({ video: { deviceId: { exact: 'DcfCYgPVZ5nvH9ieDf6iJdI8bCThdamfhUE2skl3HS0=' } } })
             .then(function(stream) {
                 var video1 = document.getElementById('video1');
                 video1.srcObject = stream;
