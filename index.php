@@ -50,7 +50,8 @@
             });
 
     </script>
-    
+   
+   
     <script>
         // Acceder al video stream de la primera cámara USB
         /*navigator.mediaDevices.getUserMedia({ video: { deviceId: { exact: 'DcfCYgPVZ5nvH9ieDf6iJdI8bCThdamfhUE2skl3HS0=' } } })
@@ -73,7 +74,9 @@
             .catch(function(err) {
                 console.log("Error al acceder a la segunda cámara: " + err);
             });*/
-              // Función para obtener la primera cámara disponible
+              
+        
+        // Función para obtener la primera cámara disponible 
         function obtenerPrimeraCamara() {
             return navigator.mediaDevices.getUserMedia({ video: true })
                 .then(function(stream) {
@@ -98,7 +101,6 @@
                     console.error("Error al acceder a la segunda cámara: ", err);
                 });
         }
-
         // Obtener y aplicar las cámaras disponibles al cargar la página
         window.addEventListener('load', function() {
             navigator.mediaDevices.enumerateDevices()
