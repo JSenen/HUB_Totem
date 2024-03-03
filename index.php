@@ -72,29 +72,7 @@
    
    
     <script>
-        // Acceder al video stream de la primera cámara USB
-        /*navigator.mediaDevices.getUserMedia({ video: { deviceId: { exact: 'DcfCYgPVZ5nvH9ieDf6iJdI8bCThdamfhUE2skl3HS0=' } } })
-            .then(function(stream) {
-                var video1 = document.getElementById('video1');
-                video1.srcObject = stream;
-                video1.play();
-            })
-            .catch(function(err) {
-                console.log("Error al acceder a la primera cámara: " + err);
-            });
 
-        // Acceder al video stream de la segunda cámara USB
-        navigator.mediaDevices.getUserMedia({ video: { deviceId: { exact: 'Wa6epbQOMpOyErawWcpTmRZj2wXndy4zoK/Br1U4cMk=' } } })
-            .then(function(stream) {
-                var video2 = document.getElementById('video2');
-                video2.srcObject = stream;
-                video2.play();
-            })
-            .catch(function(err) {
-                console.log("Error al acceder a la segunda cámara: " + err);
-            });*/
-              
-        
         // Función para obtener la primera cámara disponible 
         function obtenerPrimeraCamara() {
             return navigator.mediaDevices.getUserMedia({ video: true })
@@ -154,22 +132,7 @@
             link.download = 'captura_camara.png';
             link.click();
         });*/
-         // Capturar una imagen de la cámara web al hacer clic en el botón
-         document.getElementById('botonCapturar').addEventListener('click', function() {
-            var video1 = document.getElementById('video1');
-            var canvas = document.createElement('canvas');
-            var context = canvas.getContext('2d');
-            canvas.width = video1.videoWidth * 2; // Ancho del canvas igual a la suma de los anchos de los videos
-            canvas.height = video1.videoHeight;
-            context.drawImage(video1, 0, 0, video1.videoWidth / 2, video1.videoHeight, 0, 0, video1.videoWidth / 2, video1.videoHeight); // Dibujar solo la mitad izquierda del primer video
-            context.drawImage(video2, 0, 0, video1.videoWidth / 2, video1.videoHeight, video1.videoWidth / 2, 0, video1.videoWidth / 2, video1.videoHeight); // Dibujar solo la mitad derecha del segundo video
-            var dataURL = canvas.toDataURL('image/png'); // Convertir el contenido del canvas a una imagen PNG
-            // Descargar la imagen
-            var link = document.createElement('a');
-            link.href = dataURL;
-            link.download = 'captura_camara.png';
-            link.click();
-        });
+        
         
     </script>
 </body>

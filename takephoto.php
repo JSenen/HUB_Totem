@@ -103,6 +103,23 @@
                     console.error('Error al enumerar dispositivos:', err);
                 });
         });
+
+         // Capturar una imagen de la cámara web al hacer clic en el botón
+         document.getElementById('botonCamara').addEventListener('click', function() {
+            var video1 = document.getElementById('video1');
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d');
+            canvas.width = video1.videoWidth * 2; // Ancho del canvas igual a la suma de los anchos de los videos
+            canvas.height = video1.videoHeight;
+            context.drawImage(video1, 0, 0, video1.videoWidth / 2, video1.videoHeight, 0, 0, video1.videoWidth / 2, video1.videoHeight); // Dibujar solo la mitad izquierda del primer video
+            context.drawImage(video2, 0, 0, video1.videoWidth / 2, video1.videoHeight, video1.videoWidth / 2, 0, video1.videoWidth / 2, video1.videoHeight); // Dibujar solo la mitad derecha del segundo video
+            var dataURL = canvas.toDataURL('image/png'); // Convertir el contenido del canvas a una imagen PNG
+            // Descargar la imagen
+            var link = document.createElement('a');
+            link.href = dataURL;
+            link.download = 'captura_camara.png';
+            link.click();
+        });
     </script>
 
 </body>

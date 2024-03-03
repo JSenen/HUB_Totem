@@ -126,7 +126,7 @@ button {
     background-color: red;
     color: white;
     border: none;
-    border-radius: 100%;
+    border-radius: 50%;
     width: 100px;
     height: 100px;
     display: flex;
@@ -134,4 +134,9 @@ button {
     align-items: center;
     font-size: 24px;
     cursor: pointer;
+    transition: transform 0.2s ease; /* Transición en la propiedad de transformación */
+}
+
+#botonCamara:hover {
+    transform: scale(1.1); /* Escalar el botón al 110% del tamaño original al pasar el cursor sobre él */
 }
