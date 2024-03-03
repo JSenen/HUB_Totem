@@ -11,8 +11,7 @@
 <body>
 <div class="video-container">
         <video id="video1" autoplay></video>
-        <video id="video2" autoplay></video>
-        
+        <video id="video2" autoplay></video>       
 </div>
 <!-- Boton captura foto -->
 <div class="container-photo">
@@ -120,7 +119,8 @@
             link.download = 'captura_camara.png';
             link.click();
         });
-    </script>
 
+       
+</script>
 </body>
 </html>
