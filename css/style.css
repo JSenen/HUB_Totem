@@ -113,3 +113,25 @@ button {
 .fullscreen-button i {
     color: #333; /* Color del icono */
 }
+.container-photo {
+    
+    position: fixed; /* Posición fija en la ventana */
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    
+}
+#botonCamara {
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 100%;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+}

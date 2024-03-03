@@ -19,21 +19,40 @@
                 <p class="t1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris </p>
                 <p class="t2">Integer semper blandit felis, a mollis quam commodo ac 2</p>
             </div>
+<!---
             <div>
                 <button id="botonCapturar">Capturar</button>
             </div>
+-->
+            <div>
+                <button id="botonEmpezar" onclick="window.location.href='takephoto.php'" style="font-size: 30px;">Empezar</button>
+            </div>
+
         </div>
     </div>
-       <!-- Botones redondos -->
-    <div class="rounded-buttons">
-        <button id="boton1">Normal</button>
-        <button id="boton2">UV</button>
-        <button id="boton3">Mixta</button>
-    </div>
-     <!-- Botón de pantalla completa -->
-     <div id="botonPantallaCompleta" class="fullscreen-button">
-        <i class="fas fa-expand"></i> <!-- Ícono de pantalla completa -->
-    </div>
+    <!-- Botón de pantalla completa -->
+<div id="botonPantallaCompleta" class="fullscreen-button" onclick="toggleFullScreen()">
+    <i class="fas fa-expand"></i> <!-- Ícono de pantalla completa -->
+</div>
+
+<script>
+    function toggleFullScreen() {
+        var elem = document.documentElement;
+
+        var requestFullScreen = elem.requestFullscreen || elem.mozRequestFullScreen || elem.webkitRequestFullscreen || elem.msRequestFullscreen;
+        var exitFullScreen = document.exitFullscreen || document.mozCancelFullScreen || document.webkitExitFullscreen || document.msExitFullscreen;
+
+        if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+            requestFullScreen.call(elem);
+        } else {
+            exitFullScreen.call(document);
+        }
+    }
+    // Almacenar el estado de pantalla completa antes de cambiar de página
+    window.addEventListener('beforeunload', function() {
+        sessionStorage.setItem('pantallaCompleta', document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
+    });
+</script>
     
    <!-- Mostrar en consola los identificadores de las cámaras usadas -->
    <script>
@@ -151,15 +170,7 @@
             link.download = 'captura_camara.png';
             link.click();
         });
-        // Solicitar pantalla completa al hacer clic en el botón
-        document.getElementById('botonPantallaCompleta').addEventListener('click', function() {
-            var elem = document.documentElement;
-            var requestFullScreen = elem.requestFullscreen || elem.mozRequestFullScreen || elem.webkitRequestFullscreen || elem.msRequestFullscreen;
-
-            if (requestFullScreen) {
-                requestFullScreen.call(elem);
-            }
-        });
+        
     </script>
 </body>
 </html>
