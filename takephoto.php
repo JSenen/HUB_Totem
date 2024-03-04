@@ -32,7 +32,7 @@
     <input type="hidden" id="imageData" name="imageData">
 </form>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    /* document.addEventListener('DOMContentLoaded', function() {
         var pantallaCompleta = sessionStorage.getItem('pantallaCompleta');
 
         if (pantallaCompleta) {
@@ -41,7 +41,26 @@
 
             requestFullScreen.call(elem);
         }
+    }); */
+    document.addEventListener('DOMContentLoaded', function() {
+    // Verificar si la página estaba en modo de pantalla completa antes
+    var pantallaCompleta = sessionStorage.getItem('pantallaCompleta');
+
+    if (pantallaCompleta) {
+        var elem = document.documentElement;
+        var requestFullScreen = elem.requestFullscreen || elem.mozRequestFullScreen || elem.webkitRequestFullscreen || elem.msRequestFullscreen;
+
+        // Solicitar pantalla completa solo si no estamos ya en modo de pantalla completa
+        if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+            requestFullScreen.call(elem);
+        }
+    }
+
+    // Almacenar el estado de pantalla completa antes de cambiar de página
+    window.addEventListener('beforeunload', function() {
+        sessionStorage.setItem('pantallaCompleta', document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
     });
+});
 </script>
 <!-- Mostrar en consola los identificadores de las cámaras usadas -->
 <script>

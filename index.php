@@ -48,11 +48,11 @@
             exitFullScreen.call(document);
         }
     }
-    // Almacenar el estado de pantalla completa antes de cambiar de página
+        // Almacenar el estado de pantalla completa antes de cambiar de página
     window.addEventListener('beforeunload', function() {
         sessionStorage.setItem('pantallaCompleta', document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
     });
-</script>
+    </script>
     
    <!-- Mostrar en consola los identificadores de las cámaras usadas -->
    <script>
