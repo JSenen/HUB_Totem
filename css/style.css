@@ -37,11 +37,11 @@ video {
     object-fit: cover;
 }
 #video1 {
-    object-position: right; /* Ajusta el video 1 para que muestre la mitad izquierda */
+    object-position: center; /* Ajusta el video 1 para que muestre la mitad izquierda */
 }
 
 #video2 {
-    object-position: left; /* Ajusta el video 2 para que muestre la mitad derecha */
+    object-position: center; /* Ajusta el video 2 para que muestre la mitad derecha */
 }
 
 .buttons-container {
