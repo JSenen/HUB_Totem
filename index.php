@@ -13,6 +13,7 @@
         <video id="video1" autoplay></video>
         <video id="video2" autoplay></video>
     </div>
+    <canvas id="canvas" style="display: none;"></canvas> <!-- Canvas para mostrar la imagen capturada -->
     <div class="buttons-container">
         <div class="button-wrapper">
             <div class="text-container">
@@ -118,12 +119,57 @@
         });
       */
    // Función para obtener la primera cámara disponible 
-function obtenerPrimeraCamara() {
+/* function obtenerPrimeraCamara() {
     return navigator.mediaDevices.getUserMedia({ video: true })
         .then(function(stream) {
             var video1 = document.getElementById('video1');
             video1.srcObject = stream;
             video1.play();
+            // Devolvemos el stream de la primera cámara para usarlo luego
+            return stream;
+        })
+        .catch(function(err) {
+            console.error("Error al acceder a la primera cámara: ", err);
+        });
+} */
+//TODO: Factor de escala de las webcam
+ function obtenerPrimeraCamara() {
+    return navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function(stream) {
+            var video1 = document.getElementById('video1');
+            var canvas = document.getElementById('canvas');
+            var context = canvas.getContext('2d');
+
+            // Establecer el stream de la cámara en el elemento de video
+            video1.srcObject = stream;
+            video1.play();
+
+            // Escalar y mostrar la imagen capturada en el mismo canvas que el video
+            video1.addEventListener('canplay', function() {
+                // Ajustar el tamaño del canvas al tamaño del video
+                canvas.width = video1.videoWidth;
+                canvas.height = video1.videoHeight;
+
+                // Dibujar el video en el canvas
+                context.drawImage(video1, 0, 0, canvas.width, canvas.height);
+
+                // Escalar la imagen y mantener proporciones
+                var scaleFactor = 0.1; // Factor de escala (ajustar según sea necesario)
+                var newWidth = canvas.width * scaleFactor;
+                var newHeight = canvas.height * scaleFactor;
+
+                // Obtener la imagen escalada
+                var scaledImage = new Image();
+                scaledImage.src = canvas.toDataURL('image/png', 1.0); // Calidad 1.0 para mantener la calidad original
+
+                // Limpiar el canvas
+                context.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Mostrar la imagen capturada y escalada en el canvas
+                scaledImage.onload = function() {
+                    context.drawImage(scaledImage, 0, 0, newWidth, newHeight);
+                };
+            });
             // Devolvemos el stream de la primera cámara para usarlo luego
             return stream;
         })
